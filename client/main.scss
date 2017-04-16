@@ -41,3 +41,47 @@
         opacity: .04;
     }
 }
+
+#main_image {
+    height:570px;
+    width:570px;
+    position:absolute;
+    margin:0 auto;
+    top:45%;
+    margin-top:-285px;
+    left:50%;
+    margin-left:-285px;
+
+    #main_avatar {
+        height: 300px;
+        width: 300px;
+        overflow: hidden;
+        position: absolute;
+        margin: auto;
+        border-radius: 300px;
+        border: 5px solid black;
+        left: 50%;
+        margin-left: -160px;
+        top: 50%;
+        margin-top: -160px;
+
+        img {
+            height: 300px;
+            margin: 0 auto;
+        }
+    }
+
+    #record_logo {
+        height: 550px;
+        width: 550px;
+        overflow: hidden;
+        position: absolute;
+        margin: auto;
+
+        img {
+            height: 550px;
+            margin: auto;
+            position: absolute;
+        }
+    }
+}
