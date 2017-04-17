@@ -2,8 +2,12 @@ import { Template } from 'meteor/templating';
 import "./home.html";
 
 Template.home.onRendered(function() {
-	var windowSize = $(window).width();
-	var numBars = Math.round(windowSize / 150);
+	let windowSize = $(window).width(),
+		numBars = Math.round(windowSize / 150),
+		angle = 0,
+		angleIncrease = 3;
+
+
 	for (var i = 0; i < numBars;i++){
 		$(".sound_bar").append("<span>");
 		$(".sound_bar span").addClass("bar");
@@ -13,9 +17,6 @@ Template.home.onRendered(function() {
 	$(".bar").each(function(i) {
 	    fluctuate($(this));
 	});
-
-	var angle = 0;
-	var angleIncrease = 3;
 
 	var interval = setInterval(function(){
 		var text = $(".play").html();
@@ -32,6 +33,21 @@ Template.home.onRendered(function() {
 	    angle+=angleIncrease;
 	    $("#record_logo").rotate(angle);
 	},17);
+
+	$(window).resize(function() {
+		windowSize = $(window).width();
+		numBars = Math.round(windowSize / 150);
+		$(".sound_bar").empty();
+		for (var i = 0; i < numBars;i++){
+			$(".sound_bar").append("<span>");
+			$(".sound_bar span").addClass("bar");
+			$(".sound_bar span").last().css("left", i*150);
+		}
+
+		$(".bar").each(function(i) {
+		    fluctuate($(this));
+		});
+	});
 });
 
 function fluctuate(bar) {
