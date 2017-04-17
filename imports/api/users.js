@@ -5,6 +5,11 @@ Schemas.UserProfile = new SimpleSchema({
     name: {
         type: String,
         label: "User's name"
+    },
+    isPlaying: {
+    	type: Boolean,
+    	label: "isPlaying Flag",
+    	defaultValue: true
     }
 });
 
@@ -42,3 +47,13 @@ if (Meteor.isServer) {
 		return Meteor.users.find({});
 	});
 }
+
+Meteor.methods({
+	updateUserProfile: function(attribute, value) {
+		Meteor.users.update({}, {
+			$set: {
+				["profile." + attribute]: value
+			}
+		});
+	}
+});

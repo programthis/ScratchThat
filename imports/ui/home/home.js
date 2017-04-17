@@ -19,7 +19,7 @@ Template.home.onRendered(function() {
 	});
 
 	var interval = setInterval(function(){
-		var text = $(".play").html();
+		// var text = $(".play").html();
 		//making it so the record spinning is dependent on the "NOW PLAYING" in the navbar
 		// if (text === "NOW PLAYING:"){
 		// 	angleIncrease = 3;
@@ -31,7 +31,7 @@ Template.home.onRendered(function() {
 		angleIncrease = 3;
 
 	    angle+=angleIncrease;
-	    $("#record_logo").rotate(angle);
+	    $(".recordContainer .record").rotate(angle);
 	},17);
 
 	$(window).resize(function() {
@@ -61,3 +61,17 @@ function fluctuate(bar) {
         fluctuate($(this));
     });
 }
+
+Template.home.events({
+	"click .recordContainer": function(evt) {
+		evt.preventDefault();
+		let isPlaying = Meteor.user().profile.isPlaying;
+		if (isPlaying) {
+			isPlaying = false;
+		}
+		else {
+			isPlaying = true;
+		}
+		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+	}
+});
