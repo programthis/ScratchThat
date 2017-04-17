@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+body{
+    overflow-y:hidden;
+ }
+
 .bg {
     background-color: #ABABA9;
     width: 100%;
@@ -43,14 +47,12 @@
 }
 
 #main_image {
-    height:570px;
-    width:570px;
-    position:absolute;
-    margin:0 auto;
-    top:45%;
-    margin-top:-285px;
-    left:50%;
-    margin-left:-285px;
+    height: 570px;
+    width: 570px;
+    position: relative;
+    margin: 0 auto;
+    left: 50%;
+    margin-left: -285px;
 
     #main_avatar {
         height: 300px;
