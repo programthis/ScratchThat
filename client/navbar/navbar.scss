@@ -12,12 +12,22 @@
 	justify-content: space-between;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;  
+	box-sizing: border-box;
+
+	.left, .right {
+		@include flex-align-no-justify;
+	}
+
+	.logo {
+		a {
+			font-size: 18px;	
+		}
+	}
 
 	a {
 		@include animation-transition(0.2s);
 		color: #999;
-		font-size: 18px;
+		font-size: 13px;
 		cursor: pointer;
 
 		&:hover {
@@ -26,7 +36,7 @@
 	}
 
 	span:not(:last-child) {
-		margin-left: 20px;
+		margin-right: 20px;
 	}
 }
 

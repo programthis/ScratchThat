@@ -4,12 +4,18 @@ var Schemas = {};
 Schemas.UserProfile = new SimpleSchema({
     name: {
         type: String,
-        label: "User's name"
+        label: "User's name",
+        optional: true
     },
     isPlaying: {
     	type: Boolean,
     	label: "isPlaying Flag",
     	defaultValue: true
+    },
+    isAdmin: {
+    	type: Boolean,
+    	label: "isAdmin Flag",
+    	defaultValue: false
     }
 });
 

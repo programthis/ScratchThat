@@ -1,11 +1,11 @@
 <template name="navbar">
 	<div class="navbar">
 		<div class="left">
-			<span>
+			<span class="logo">
 				<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
 			</span>
 			<span>
-				NOW PLAYING:
+				<a href="/"> NOW PLAYING:</a>
 			</span>
 			<span>
 			</span>
@@ -15,10 +15,10 @@
 				POWERED BY: <img src="images/logo_white.png">
 			</span>
 			<span>
-				Register
+				<a href="{{pathFor route="register"}}">Register</a>
 			</span>
 			<span>
-				Login
+				<a href="{{pathFor route="login"}}">Login</a>
 			</span>
 		</div>
 	</div>

@@ -1,5 +1,12 @@
 <template name="layout">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	{{> Template.dynamic template=main}}
+	<div class="mainContainer">
+		<span class="bg bg-3"></span>
+		<span class="bg bg-1"></span>
+		<span class="bg bg-2"></span>
+
+		<div class="sound_bar"></div>
+		{{> Template.dynamic template=main}}
+	</div>
 	{{> navbar}}
 </template>
