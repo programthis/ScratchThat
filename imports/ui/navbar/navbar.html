@@ -5,7 +5,11 @@
 				<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
 			</span>
 			<span>
-				<a href="/"> NOW PLAYING:</a>
+				{{#if currentUser.profile.isPlaying}}
+					<a href="/">NOW PLAYING:</a>
+				{{else}}
+					<a href="/">PAUSED:</a>
+				{{/if}}
 			</span>
 			<span>
 			</span>

@@ -9,7 +9,7 @@ Template.layout.onRendered(function() {
 		angle = 0,
 		angleIncrease = 3;
 
-	for (var i = 0; i < numBars;i++){
+	for (var i = 0; i < numBars;i++) {
 		$(".sound_bar").append("<span>");
 		$(".sound_bar span").addClass("bar");
 		$(".sound_bar span").last().css("left", i*150);
@@ -19,18 +19,14 @@ Template.layout.onRendered(function() {
 	    fluctuate($(this));
 	});
 
-	var interval = setInterval(function(){
-		// var text = $(".play").html();
-		//making it so the record spinning is dependent on the "NOW PLAYING" in the navbar
-		// if (text === "NOW PLAYING:"){
-		// 	angleIncrease = 3;
-		// }
-		// else{
-		// 	angleIncrease = 0;
-		// }
-
-		angleIncrease = 3;
-
+	var interval = setInterval(function() {
+		let isPlaying = Meteor.user().profile.isPlaying;
+		if (isPlaying) {
+			angleIncrease = 3;
+		}
+		else {
+			angleIncrease = 0;
+		}
 	    angle+=angleIncrease;
 	    $(".recordContainer .record").rotate(angle);
 	},17);
