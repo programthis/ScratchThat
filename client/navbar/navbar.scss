@@ -1,10 +1,33 @@
+@import "../mixins";
+
 .navbar {
+	@include flex-align-no-justify;
 	background-image: linear-gradient(to bottom, #05212C 0%, #222 100%);
 	border: 1px solid #080808;
 	width: 100%;
 	position: fixed;
 	height: 50px;
 	bottom: 0;
+	padding: 0 15px;
+	justify-content: space-between;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;  
+
+	a {
+		@include animation-transition(0.2s);
+		color: #999;
+		font-size: 18px;
+		cursor: pointer;
+
+		&:hover {
+			color: white;
+		}
+	}
+
+	span:not(:last-child) {
+		margin-left: 20px;
+	}
 }
 
 .navbar-right {

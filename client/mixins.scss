@@ -1,0 +1,35 @@
+@mixin animation-transition($speed) {
+	-webkit-transition: all $speed ease; /* Safari and Chrome */
+	-moz-transition: all $speed ease; /* Firefox */
+	-ms-transition: all $speed ease; /* IE 9 */
+	-o-transition: all $speed ease; /* Opera */
+	transition: all $speed ease;
+}
+
+@mixin flex-align {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin flex-align-no-align {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	justify-content: center;
+}
+
+@mixin flex-align-no-justify {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+}
