@@ -9,7 +9,7 @@ Template.layout.onRendered(function() {
 		angle = 0,
 		angleIncrease = 3;
 
-	for (var i = 0; i < numBars;i++) {
+	for (var i = 0; i < numBars; i++) {
 		$(".sound_bar").append("<span>");
 		$(".sound_bar span").addClass("bar");
 		$(".sound_bar span").last().css("left", i*150);
