@@ -20,12 +20,14 @@ Template.layout.onRendered(function() {
 	});
 
 	var interval = setInterval(function() {
-		let isPlaying = Meteor.user().profile.isPlaying;
-		if (isPlaying) {
-			angleIncrease = 3;
-		}
-		else {
-			angleIncrease = 0;
+		if (Meteor.user() && Meteor.user().profile) {
+			let isPlaying = Meteor.user().profile.isPlaying;
+			if (isPlaying) {
+				angleIncrease = 3;
+			}
+			else {
+				angleIncrease = 0;
+			}
 		}
 	    angle+=angleIncrease;
 	    $(".recordContainer .record").rotate(angle);
