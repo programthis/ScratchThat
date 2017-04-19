@@ -22,12 +22,18 @@
 						<img class="soundCloudLogo" src="images/logo_white.png">
 					</a>
 				</span>
-				<span>
-					<a href="{{pathFor route="login"}}">Login</a>
-				</span>
-				<span>
-					<a href="{{pathFor route="register"}}">Register</a>
-				</span>
+				{{#if currentUser}}
+					<span>
+						<a href="{{pathFor "logout"}}">Logout</a>
+					</span>
+				{{else}}
+					<span>
+						<a href="{{pathFor route="login"}}">Login</a>
+					</span>
+					<span>
+						<a href="{{pathFor route="register"}}">Register</a>
+					</span>
+				{{/if}}
 			</div>
 		</div>
 		<div class="navbarMobile">

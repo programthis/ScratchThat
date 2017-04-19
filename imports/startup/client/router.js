@@ -26,3 +26,12 @@ FlowRouter.route('/register', {
 		BlazeLayout.render('layout', { main: 'register' });
 	}
 });
+
+FlowRouter.route("/logout", {
+	name: "logout",
+	action() {
+		Meteor.logout(function() {
+			FlowRouter.go("home");
+		});
+	}
+});
