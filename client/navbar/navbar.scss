@@ -19,16 +19,6 @@
 		@include flex-align-no-justify;
 	}
 
-	.logo {
-		a {
-			font-size: 18px;	
-		}
-	}
-
-	.soundCloudLogo {
-		margin-bottom: -2px;
-	}
-
 	a {
 		@include animation-transition(0.2s);
 		color: #999;
@@ -47,6 +37,16 @@
 
 		span:not(:last-child) {
 			margin-right: 20px;
+		}
+
+		.logo {
+			a {
+				font-size: 18px;	
+			}
+		}
+
+		.soundCloudLogo {
+			margin-bottom: -2px;
 		}
 	}
 
@@ -74,27 +74,26 @@
 			.hamburgerIcon {
 				position: absolute;
 				right: 0;
-				width: 20px;
-				padding-right: 10px;
-			}
 
-			.hamburgerIcon:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				top: 0.25em;
-				width: 1em;
-				height: 0.15em;
-				background: black;
-				box-shadow: 
-				  0 0.25em 0 0 black,
-				  0 0.5em 0 0 black;
+				.hamburgerBar {
+					width: 20px;
+					height: 2px;
+					background-color: white;
+					&:not(:last-child) {
+						margin-bottom: 3px;
+					}
+				}
 			}
 		}
 
 		.navbarMobileLinks {
 			display: none;
 			text-align: right;
+		}
+
+		.logo {
+			font-size: 18px;
+			width: 100%;
 		}
 	}
 
