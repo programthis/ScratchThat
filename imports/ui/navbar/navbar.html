@@ -24,6 +24,9 @@
 				</span>
 				{{#if currentUser}}
 					<span>
+						<a href="{{pathFor "profile"}}">Profile</a>
+					</span>
+					<span>
 						<a href="{{pathFor "logout"}}">Logout</a>
 					</span>
 				{{else}}
@@ -45,6 +48,9 @@
 					</a>
 				</li>
 				{{#if currentUser}}
+					<li>
+						<a href="{{pathFor "profile"}}">Profile</a>
+					</li>
 					<li>
 						<a href="{{pathFor "logout"}}">Logout</a>
 					</li>

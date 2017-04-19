@@ -5,6 +5,7 @@ import '../../ui/layout/layout.js';
 import '../../ui/home/home.js';
 import "../../ui/login/login.js";
 import "../../ui/register/register.js";
+import "../../ui/profile/profile.js";
 
 FlowRouter.route('/', {
 	name: 'home',
@@ -35,3 +36,23 @@ FlowRouter.route("/logout", {
 		});
 	}
 });
+
+let privateRoutes = FlowRouter.group({
+	name: "private",
+	triggersEnter: [
+		isUser
+	]
+});
+
+privateRoutes.route("/profile", {
+	name: "profile",
+	action() {
+		BlazeLayout.render('layout', { main: "profile" });
+	}
+});
+
+function isUser() {
+	if (!Meteor.userId()) {
+		FlowRouter.go("home");
+	}
+}
