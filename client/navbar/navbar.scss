@@ -2,6 +2,7 @@
 
 .navbar {
 	@include flex-align-no-justify;
+	font-family: arial;
 	background-image: linear-gradient(to bottom, #05212C 0%, #222 100%);
 	border: 1px solid #080808;
 	width: 100%;
@@ -24,6 +25,10 @@
 		}
 	}
 
+	.soundCloudLogo {
+		margin-bottom: -2px;
+	}
+
 	a {
 		@include animation-transition(0.2s);
 		color: #999;
@@ -35,22 +40,74 @@
 		}
 	}
 
-	span:not(:last-child) {
-		margin-right: 20px;
+	.navbarDesktop {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		span:not(:last-child) {
+			margin-right: 20px;
+		}
 	}
+
+	.navbarMobile {
+		display: none;
+		margin: 20px;
+		width: 100%;
+
+		li {
+			list-style-type: none;
+			padding: 3px 10px;
+
+			&:hover {
+				background-color: white;
+			}
+		}
+
+		.navbarMobileToggle {
+			@include flex-align-no-justify;
+			width: 100%;
+			height: 30px;
+			position: relative;
+			cursor: pointer;
+
+			.hamburgerIcon {
+				position: absolute;
+				right: 0;
+				width: 20px;
+				padding-right: 10px;
+			}
+
+			.hamburgerIcon:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0.25em;
+				width: 1em;
+				height: 0.15em;
+				background: black;
+				box-shadow: 
+				  0 0.25em 0 0 black,
+				  0 0.5em 0 0 black;
+			}
+		}
+
+		.navbarMobileLinks {
+			display: none;
+			text-align: right;
+		}
+	}
+
 }
 
-.navbar-right {
-    font-size: 14px;
-    img {
-        margin: 0 0 3px 5px;
-    }
-}
+@media all and (max-width: 50em) {
+	.navbar {
+		.navbarDesktop {
+			display: none;
+		}
 
-.navbar-inverse .navbar-toggle {
-    border: none;
-
-    &:hover, &:focus {
-        background-color: initial;
-    }
+		.navbarMobile {
+			@include flex-align-no-justify;
+		}
+	}
 }

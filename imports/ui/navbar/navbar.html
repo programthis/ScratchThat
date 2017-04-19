@@ -1,29 +1,58 @@
 <template name="navbar">
 	<div class="navbar">
-		<div class="left">
-			<span class="logo">
-				<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
-			</span>
-			<span>
-				{{#if currentUser.profile.isPlaying}}
-					<a href="/">NOW PLAYING:</a>
-				{{else}}
-					<a href="/">PAUSED:</a>
-				{{/if}}
-			</span>
-			<span>
-			</span>
+		<div class="navbarDesktop">
+			<div class="left">
+				<span class="logo">
+					<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
+				</span>
+				<span>
+					{{#if currentUser.profile.isPlaying}}
+						<a href="/">NOW PLAYING:</a>
+					{{else}}
+						<a href="/">PAUSED:</a>
+					{{/if}}
+				</span>
+				<span>
+				</span>
+			</div>
+			<div class="right">
+				<span>
+					<a href="https://soundcloud.com/">
+						POWERED BY:
+						<img class="soundCloudLogo" src="images/logo_white.png">
+					</a>
+				</span>
+				<span>
+					<a href="{{pathFor route="login"}}">Login</a>
+				</span>
+				<span>
+					<a href="{{pathFor route="register"}}">Register</a>
+				</span>
+			</div>
 		</div>
-		<div class="right">
-			<span>
-				POWERED BY: <img src="images/logo_white.png">
-			</span>
-			<span>
-				<a href="{{pathFor route="register"}}">Register</a>
-			</span>
-			<span>
-				<a href="{{pathFor route="login"}}">Login</a>
-			</span>
+		<div class="navbarMobile">
+			<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
+			<div class="navbarMobileToggle">
+				<a class="hamburgerIcon"></a>
+			</div>
+			<ul class="navbarMobileLinks">
+				<li>
+					<a href="https://soundcloud.com/">POWERED BY:</a>
+					<img src="images/logo_white.png">
+				</li>
+				{{#if currentUser}}
+					<li>
+						<a href="{{pathFor "logout"}}">Logout</a>
+					</li>
+				{{else}}
+					<li>
+						<a href="{{pathFor "login"}}">Login</a>
+					</li>
+					<li>
+						<a href="{{pathFor "register"}}">Register</a>
+					</li>
+				{{/if}}
+			</ul>
 		</div>
 	</div>
 </template>
