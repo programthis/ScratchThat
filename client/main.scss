@@ -1,3 +1,5 @@
+@import "./mixins";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -16,6 +18,13 @@ a {
 .centreContainer {
     width: 500px;
     margin: 0 auto;
+    height: 100vh;
+
+    form {
+        position: relative;
+        top: 45%;
+        transform: translateY(-50%);
+    }
 }
 
 form {
@@ -83,7 +92,7 @@ form {
     height: 570px;
     width: 570px;
     position: relative;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
     margin: 0 auto;
     cursor: pointer;

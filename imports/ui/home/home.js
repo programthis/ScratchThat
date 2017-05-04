@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import "./home.html";
 
 Template.home.events({
-	"click .recordContainer": function(evt) {
+	"click .recordContainer.loggedIn": function(evt) {
 		evt.preventDefault();
 		let isPlaying = Meteor.user().profile.isPlaying;
 		if (isPlaying) {
