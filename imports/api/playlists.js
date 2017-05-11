@@ -12,6 +12,11 @@ SongSchema = new SimpleSchema({
 		type: Boolean,
 		label: "Already Played Flag",
 		defaultValue: false
+	},
+	orderIndex: {
+		type: Number,
+		label: "Order Index",
+		defaultValue: 0
 	}
 });
 
@@ -52,7 +57,8 @@ Meteor.methods({
 			$addToSet: {
 				songs: {
 					_id: songId,
-					alreadyPlayed: false
+					alreadyPlayed: false,
+					orderIndex: 0
 				}
 			}
 		});

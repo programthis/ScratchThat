@@ -57,11 +57,7 @@ Meteor.methods({
 				if (error) {
 				}
 				else {
-					let songId = result;
-					console.log(songId);
-					console.log(result);
-
-					Meteor.call("addSongToPlaylist", songId);
+					Meteor.call("addSongToPlaylist", result);
 				}
 			});
 		});
