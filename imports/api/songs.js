@@ -27,7 +27,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 	addSong: function(name, url) {
-		Songs.insert({
+		return Songs.insert({
 			name: name,
 			url: url,
 			userId: Meteor.userId()
@@ -46,13 +46,26 @@ Meteor.methods({
 			password: password
 		});
 
+		Meteor.call("addPlaylist", "Main Playlist", function(error, result){});
+
 		let client = Soundcloud.getClient(),
 			me = client.getSync('/me', {limit : 1}),
 			playlist = client.getSync('/me/playlists', {limit : 1});
 
 		playlist[0].tracks.forEach(function(track) {
-			console.log(track);
-			Meteor.call("addSong", track.title, track.stream_url, function(error, result){});
+			Meteor.call("addSong", track.title, track.stream_url, function(error, result) {
+				if (error) {
+				}
+				else {
+					let songId = result;
+					console.log(songId);
+					console.log(result);
+
+					Meteor.call("addSongToPlaylist", songId);
+				}
+			});
 		});
+
+
 	}
 });
