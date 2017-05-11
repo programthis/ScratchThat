@@ -52,7 +52,7 @@ Meteor.methods({
 
 		playlist[0].tracks.forEach(function(track) {
 			console.log(track);
-			Meteor.call("addSong", track.title, track.permalink_url, function(error, result){});
+			Meteor.call("addSong", track.title, track.stream_url, function(error, result){});
 		});
 	}
 });
