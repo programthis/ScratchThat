@@ -38,25 +38,40 @@ Template.navbar.events({
 		}
 		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
 
-		soundManager.setup({
-			url: 'swf/',
-			onready: function() {
-				let mySound;
-				if (isPlaying) {
-					mySound = soundManager.createSound({
-						id: "track" + song._id,
-						url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
-					});
-					mySound.play();
-				}
-				else {
-					mySound.pause();
-				}
-			},
-		 	ontimeout: function() {
-		 	  // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-		 	}
+		soundManager.url = 'swf/';
+		soundManager.onready(function() {
+			let mySound = soundManager.createSound({
+				id: song._id,
+				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
+			});
+
+			if (isPlaying){
+				soundManager.play(song._id);
+			}
+			else {
+				soundManager.pause(song._id);
+			}
 		});
+
+		// soundManager.setup({
+		// 	url: 'swf/',
+		// 	onready: function() {
+		// 		let mySound;
+		// 		if (isPlaying) {
+		// 			mySound = soundManager.createSound({
+		// 				id: "track" + song._id,
+		// 				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
+		// 			});
+		// 			mySound.play();
+		// 		}
+		// 		else {
+		// 			mySound.pause();
+		// 		}
+		// 	},
+		//  	ontimeout: function() {
+		//  	  // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+		//  	}
+		// });
 	},
 	"click .pause": function(evt) {
 		evt.preventDefault();
