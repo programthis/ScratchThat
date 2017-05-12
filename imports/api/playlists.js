@@ -3,31 +3,14 @@ import { SimpleSchema } from "meteor/aldeed:simple-schema";
 
 export const Playlists = new Mongo.Collection("playlists");
 
-SongSchema = new SimpleSchema({
-	_id: {
-		type: String,
-		label: "Song ID"
-	},
-	alreadyPlayed: {
-		type: Boolean,
-		label: "Already Played Flag",
-		defaultValue: false
-	},
-	orderIndex: {
-		type: Number,
-		label: "Order Index",
-		defaultValue: 0
-	}
-});
-
 Playlists.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
 		label: "Playlist Name"
 	},
 	songs: {
-		type: [SongSchema],
-		label: "Songs",
+		type: [String],
+		label: "Song IDs",
 		defaultValue: []
 	},
 	userId: {
@@ -55,11 +38,7 @@ Meteor.methods({
 		let playlist = Playlists.findOne({});
 		Playlists.update({_id: playlist._id}, {
 			$addToSet: {
-				songs: {
-					_id: songId,
-					alreadyPlayed: false,
-					orderIndex: 0
-				}
+				songs: songId
 			}
 		});
 	}

@@ -5,7 +5,7 @@ import '../../ui/layout/layout.js';
 import '../../ui/home/home.js';
 import "../../ui/login/login.js";
 import "../../ui/register/register.js";
-import "../../ui/profile/profile.js";
+import "../../ui/playlist/playlist.js";
 
 FlowRouter.route('/', {
 	name: 'home',
@@ -44,10 +44,10 @@ let privateRoutes = FlowRouter.group({
 	]
 });
 
-privateRoutes.route("/profile", {
-	name: "profile",
+privateRoutes.route("/playlist", {
+	name: "playlist",
 	action() {
-		BlazeLayout.render('layout', { main: "profile" });
+		BlazeLayout.render('layout', { main: "playlist" });
 	}
 });
 

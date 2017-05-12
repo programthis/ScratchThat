@@ -1,6 +1,6 @@
-import "./profile.html";
+import "./playlist.html";
 
-Template.profile.events({
+Template.playlist.events({
 	"click .syncSoundCloud": function(evt) {
 		evt.preventDefault();
 		Meteor.call("syncSoundCloud");
