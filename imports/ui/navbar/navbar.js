@@ -25,10 +25,8 @@ Template.navbar.events({
 		let isPlaying = Meteor.user().profile.isPlaying,
 			playlist = Playlists.findOne({}),
 			songs = playlist.songs,
-			songId = songs.find(function(song) {
-				return song.alreadyPlayed === false;
-			})._id,
-			song = Songs.findOne(songId);
+			songId = songs[0],
+			song = Songs.findOne({});
 
 		if (isPlaying) {
 			isPlaying = false;
@@ -42,7 +40,10 @@ Template.navbar.events({
 		soundManager.onready(function() {
 			let mySound = soundManager.createSound({
 				id: song._id,
-				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
+				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+				onfinish: function() {
+					nextTrack(songId);
+				}
 			});
 
 			if (isPlaying){
@@ -53,6 +54,7 @@ Template.navbar.events({
 			}
 		});
 
+		
 		// soundManager.setup({
 		// 	url: 'swf/',
 		// 	onready: function() {
@@ -73,9 +75,35 @@ Template.navbar.events({
 		//  	}
 		// });
 	},
-	"click .pause": function(evt) {
+	"click .next": function(evt) {
 		evt.preventDefault();
-
-
+		
+		nextTrack(songId);
 	}
 });
+
+function nextTrack(songId) {
+	let playlist = Playlists.findOne({}),
+		songs = playlist.songs,
+		songIndex = songs.indexOf(songId),
+		nextSongIndex = songIndex++;	
+	songId = songs[nextSongIndex];
+
+	soundManager.url = 'swf/';
+	soundManager.onready(function() {
+		let mySound = soundManager.createSound({
+			id: song._id,
+			url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+			onfinish: function() {
+				nextTrack(songId);
+			}
+		});
+
+		if (isPlaying){
+			soundManager.play(song._id);
+		}
+		else {
+			soundManager.pause(song._id);
+		}
+	});
+}
