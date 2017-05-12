@@ -22,25 +22,45 @@ Template.navbar.events({
 	},
 	"click .play": function(evt) {
 		evt.preventDefault();
-		let playlist = Playlists.findOne({}),
+		let isPlaying = Meteor.user().profile.isPlaying,
+			playlist = Playlists.findOne({}),
 			songs = playlist.songs,
 			songId = songs.find(function(song) {
 				return song.alreadyPlayed === false;
 			})._id,
 			song = Songs.findOne(songId);
 
+		if (isPlaying) {
+			isPlaying = false;
+		}
+		else {
+			isPlaying = true;
+		}
+		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+
 		soundManager.setup({
 			url: 'swf/',
 			onready: function() {
-				var mySound = soundManager.createSound({
-					id: "track" + song._id,
-					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
-				});
-				mySound.play();
+				let mySound;
+				if (isPlaying) {
+					mySound = soundManager.createSound({
+						id: "track" + song._id,
+						url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
+					});
+					mySound.play();
+				}
+				else {
+					mySound.pause();
+				}
 			},
 		 	ontimeout: function() {
 		 	  // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
 		 	}
 		});
+	},
+	"click .pause": function(evt) {
+		evt.preventDefault();
+
+
 	}
 });
