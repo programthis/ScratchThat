@@ -16,6 +16,11 @@ Playlists.attachSchema(new SimpleSchema({
 	userId: {
 		type: String,
 		label: "User ID"
+	},
+	nowPlaying: {
+		type: String,
+		label: "Now Playing Song ID",
+		defaultValue: ""
 	}
 }));
 
@@ -39,6 +44,15 @@ Meteor.methods({
 		Playlists.update({_id: playlist._id}, {
 			$addToSet: {
 				songs: songId
+			}
+		});
+	},
+	updateNowPlaying: function(songId) {
+		console.log("Updating the song that is currently playing in the playlist...");
+		let playlist = Playlists.findOne({});
+		Playlists.update({_id: playlist._id}, {
+			$set: {
+				nowPlaying: songId
 			}
 		});
 	}

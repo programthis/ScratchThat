@@ -12,6 +12,13 @@ Template.navbar.onCreated(function() {
 	});
 });
 
+Template.navbar.helpers({
+	nowPlaying: function() {
+		let song = Songs.findOne({});
+		return song;
+	}
+});
+
 Template.navbar.events({
 	"click .navbarMobileToggle": function(evt) {
 		evt.preventDefault();
@@ -26,7 +33,7 @@ Template.navbar.events({
 			playlist = Playlists.findOne({}),
 			songs = playlist.songs,
 			songId = songs[0],
-			song = Songs.findOne({});
+			song = Songs.findOne(songId);
 
 		if (isPlaying) {
 			isPlaying = false;
@@ -35,6 +42,7 @@ Template.navbar.events({
 			isPlaying = true;
 		}
 		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+		Meteor.call("updateNowPlaying", songId);
 
 		soundManager.url = 'swf/';
 		soundManager.onready(function() {
@@ -77,7 +85,7 @@ Template.navbar.events({
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
-		
+
 		nextTrack(songId);
 	}
 });
@@ -88,6 +96,9 @@ function nextTrack(songId) {
 		songIndex = songs.indexOf(songId),
 		nextSongIndex = songIndex++;	
 	songId = songs[nextSongIndex];
+
+	let song = Songs.findOne(songId),
+		isPlaying = Meteor.user().profile.isPlaying;
 
 	soundManager.url = 'swf/';
 	soundManager.onready(function() {
