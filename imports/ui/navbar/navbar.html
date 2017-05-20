@@ -7,12 +7,19 @@
 				</span>
 				<span class="play">
 					{{#if currentUser.profile.isPlaying}}
-						<a href="/">NOW PLAYING:</a>
+						<span class="soundControl">
+							NOW PLAYING
+						</span>
 					{{else}}
-						<a href="/">PAUSED:</a>
+						<span class="soundControl">
+							PAUSED
+						</span>
 					{{/if}}
+					<span class="soundControl">
+						{{song.name}}
+					</span>
 				</span>
-				<span class="next">
+				<span class="next soundControl">
 					>>
 				</span>
 			</div>

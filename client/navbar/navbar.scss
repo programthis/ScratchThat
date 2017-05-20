@@ -19,7 +19,7 @@
 		@include flex-align-no-justify;
 	}
 
-	a {
+	a, .soundControl {
 		@include animation-transition(0.2s);
 		color: #999;
 		font-size: 13px;

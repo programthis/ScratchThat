@@ -13,7 +13,7 @@ Template.navbar.onCreated(function() {
 });
 
 Template.navbar.helpers({
-	nowPlaying: function() {
+	song: function() {
 		let song = Songs.findOne({});
 		return song;
 	}
@@ -85,7 +85,6 @@ Template.navbar.events({
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
-
 		nextTrack(songId);
 	}
 });
