@@ -1,7 +1,11 @@
 import { Template } from 'meteor/templating';
+import { Songs } from '../../api/songs.js';
+import { Playlists } from '../../api/playlists.js';
 
 import "./layout.html";
 import "../navbar/navbar.js";
+
+var mySound;
 
 Template.layout.onRendered(function() {
 	let windowSize = $(window).width(),
@@ -48,6 +52,95 @@ Template.layout.onRendered(function() {
 		});
 	});
 });
+
+Template.layout.events({
+	"click .play, click .recordContainer.loggedIn": function(evt) {
+		evt.preventDefault();
+		let isPlaying = Meteor.user().profile.isPlaying,
+			playlist = Playlists.findOne({}),
+			songs = playlist.songs,
+			songId = playlist.nowPlaying,
+			song = Songs.findOne(songId);
+
+		if (isPlaying) {
+			isPlaying = false;
+		}
+		else {
+			isPlaying = true;
+		}
+		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+		Meteor.call("updateNowPlaying", songId);
+		
+		soundManager.setup({
+			url: 'swf/',
+			onready: function() {
+				mySound = soundManager.createSound({
+					id: song._id,
+					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+					onfinish: function() {
+						let songIndex = playlist.songs.indexOf(songId);
+						if (songIndex >= 0 && songIndex < songs.length - 1) {
+							nextSongId = songs[songIndex + 1];
+							nextTrack(nextSongId);
+						}
+					}
+				});
+
+				if (isPlaying){
+					mySound.play();
+				}
+				else {
+					mySound.pause();
+				}
+			}
+		});
+	},
+	"click .next": function(evt) {
+		evt.preventDefault();
+		let playlist = Playlists.findOne({}),
+			songId = playlist.nowPlaying
+			songs = playlist.songs,
+			songIndex = playlist.songs.indexOf(songId);
+
+		if (songIndex >= 0 && songIndex < songs.length - 1) {
+			nextSongId = songs[songIndex + 1];
+			nextTrack(nextSongId);
+		}		
+	},
+});
+
+function nextTrack(songId) {
+	let playlist = Playlists.findOne({}),
+		songs = playlist.songs,
+		songIndex = songs.indexOf(songId),
+		nextSongIndex = songIndex++;	
+	songId = songs[nextSongIndex];
+
+	let song = Songs.findOne(songId),
+		isPlaying = Meteor.user().profile.isPlaying;
+
+	Meteor.call("updateNowPlaying", songId);
+	mySound.stop();
+	soundManager.setup({
+		url: 'swf/',
+		onready: function() {
+			mySound = soundManager.createSound({
+				id: song._id,
+				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+				onfinish: function() {
+					nextTrack(songId);
+				}
+			});
+
+			if (isPlaying){
+				mySound.play();
+			}
+			else {
+				mySound.pause();
+			}
+		}
+	});
+}
 
 function fluctuate(bar) {
 	let windowHeight = $(window).height() * 0.8,
