@@ -128,7 +128,11 @@ function nextTrack(songId) {
 				id: song._id,
 				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
 				onfinish: function() {
-					nextTrack(songId);
+					let songIndex = playlist.songs.indexOf(songId);
+					if (songIndex >= 0 && songIndex < songs.length - 1) {
+						nextSongId = songs[songIndex + 1];
+						nextTrack(nextSongId);
+					}
 				}
 			});
 
