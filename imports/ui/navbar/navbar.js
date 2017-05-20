@@ -14,8 +14,15 @@ Template.navbar.onCreated(function() {
 
 Template.navbar.helpers({
 	song: function() {
-		let song = Songs.findOne({});
-		return song;
+		let playlist = Playlists.findOne({});
+		if (playlist) {
+			let songId = playlist.nowPlaying,
+				song = Songs.findOne(songId);
+			return song;
+		}
+		else {
+			return false;
+		}
 	}
 });
 
@@ -99,6 +106,7 @@ function nextTrack(songId) {
 	let song = Songs.findOne(songId),
 		isPlaying = Meteor.user().profile.isPlaying;
 
+	Meteor.call("updateNowPlaying", songId);
 	soundManager.url = 'swf/';
 	soundManager.onready(function() {
 		let mySound = soundManager.createSound({
