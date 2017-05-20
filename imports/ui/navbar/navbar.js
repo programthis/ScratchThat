@@ -115,6 +115,7 @@ function nextTrack(songId) {
 		isPlaying = Meteor.user().profile.isPlaying;
 
 	Meteor.call("updateNowPlaying", songId);
+
 	soundManager.url = 'swf/';
 	soundManager.onready(function() {
 		let mySound = soundManager.createSound({
