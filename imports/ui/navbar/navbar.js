@@ -4,6 +4,8 @@ import { Playlists } from '../../api/playlists.js';
 
 import "./navbar.html";
 
+var mySound;
+
 Template.navbar.onCreated(function() {
 	let self = this;
 	self.autorun(function() {
@@ -39,7 +41,7 @@ Template.navbar.events({
 		let isPlaying = Meteor.user().profile.isPlaying,
 			playlist = Playlists.findOne({}),
 			songs = playlist.songs,
-			songId = songs[0],
+			songId = playlist.nowPlaying,
 			song = Songs.findOne(songId);
 
 		if (isPlaying) {
@@ -50,45 +52,26 @@ Template.navbar.events({
 		}
 		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
 		Meteor.call("updateNowPlaying", songId);
+		
+		soundManager.setup({
+			url: 'swf/',
+			onready: function() {
+				mySound = soundManager.createSound({
+					id: song._id,
+					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+					onfinish: function() {
+						nextTrack(songId);
+					}
+				});
 
-		soundManager.url = 'swf/';
-		soundManager.onready(function() {
-			let mySound = soundManager.createSound({
-				id: song._id,
-				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
-				onfinish: function() {
-					nextTrack(songId);
+				if (isPlaying){
+					mySound.play();
 				}
-			});
-
-			if (isPlaying){
-				soundManager.play(song._id);
-			}
-			else {
-				soundManager.pause(song._id);
+				else {
+					mySound.pause();
+				}
 			}
 		});
-
-		
-		// soundManager.setup({
-		// 	url: 'swf/',
-		// 	onready: function() {
-		// 		let mySound;
-		// 		if (isPlaying) {
-		// 			mySound = soundManager.createSound({
-		// 				id: "track" + song._id,
-		// 				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id
-		// 			});
-		// 			mySound.play();
-		// 		}
-		// 		else {
-		// 			mySound.pause();
-		// 		}
-		// 	},
-		//  	ontimeout: function() {
-		//  	  // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-		//  	}
-		// });
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
@@ -115,22 +98,24 @@ function nextTrack(songId) {
 		isPlaying = Meteor.user().profile.isPlaying;
 
 	Meteor.call("updateNowPlaying", songId);
+	mySound.stop();
+	soundManager.setup({
+		url: 'swf/',
+		onready: function() {
+			mySound = soundManager.createSound({
+				id: song._id,
+				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+				onfinish: function() {
+					nextTrack(songId);
+				}
+			});
 
-	soundManager.url = 'swf/';
-	soundManager.onready(function() {
-		let mySound = soundManager.createSound({
-			id: song._id,
-			url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
-			onfinish: function() {
-				nextTrack(songId);
+			if (isPlaying){
+				mySound.play();
 			}
-		});
-
-		if (isPlaying){
-			soundManager.play(song._id);
-		}
-		else {
-			soundManager.pause(song._id);
+			else {
+				mySound.pause();
+			}
 		}
 	});
 }
