@@ -92,7 +92,15 @@ Template.navbar.events({
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
-		nextTrack(songId);
+		let playlist = Playlists.findOne({}),
+			songId = playlist.nowPlaying
+			songs = playlist.songs,
+			songIndex = playlist.songs.indexOf(songId);
+
+		if (songIndex >= 0 && songIndex < songs.length - 1) {
+			nextSongId = songs[songIndex + 1];
+			nextTrack(nextSongId);
+		}		
 	}
 });
 
