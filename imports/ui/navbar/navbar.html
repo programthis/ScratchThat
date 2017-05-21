@@ -8,16 +8,15 @@
 				<span class="play">
 					{{#if currentUser.profile.isPlaying}}
 						<span class="soundControl">
-							NOW PLAYING
+							<span>NOW PLAYING</span>
+							<span>{{song.name}}</span>
 						</span>
 					{{else}}
 						<span class="soundControl">
-							PAUSED
+							<span>PAUSED</span>
+							<span>{{song.name}}</span>
 						</span>
 					{{/if}}
-					<span class="soundControl">
-						{{song.name}}
-					</span>
 				</span>
 				<span class="next soundControl">
 					&#9656; &#9656;
