@@ -78,11 +78,15 @@ Template.layout.events({
 					id: song._id,
 					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
 					onfinish: function() {
-						let songIndex = playlist.songs.indexOf(songId);
+						let songIndex = playlist.songs.indexOf(songId),
+							nextSongId;
 						if (songIndex >= 0 && songIndex < songs.length - 1) {
 							nextSongId = songs[songIndex + 1];
-							nextTrack(nextSongId);
 						}
+						else if (songIndex >= songs.length - 1) {
+							nextSongId = songs[0];
+						}
+						nextTrack(nextSongId);
 					}
 				});
 
@@ -98,15 +102,19 @@ Template.layout.events({
 	"click .next": function(evt) {
 		evt.preventDefault();
 		let playlist = Playlists.findOne({}),
-			songId = playlist.nowPlaying
+			songId = playlist.nowPlaying,
 			songs = playlist.songs,
-			songIndex = playlist.songs.indexOf(songId);
+			songIndex = playlist.songs.indexOf(songId),
+			nextSongId;
 
 		if (songIndex >= 0 && songIndex < songs.length - 1) {
 			nextSongId = songs[songIndex + 1];
-			nextTrack(nextSongId);
-		}		
-	},
+		}
+		else if (songIndex >= songs.length - 1) {
+			nextSongId = songs[0];
+		}
+		nextTrack(nextSongId);
+	}
 });
 
 function nextTrack(songId) {
@@ -120,7 +128,9 @@ function nextTrack(songId) {
 		isPlaying = Meteor.user().profile.isPlaying;
 
 	Meteor.call("updateNowPlaying", songId);
-	mySound.stop();
+	if (mySound) {
+		mySound.stop();	
+	}
 	soundManager.setup({
 		url: 'swf/',
 		onready: function() {
@@ -128,11 +138,15 @@ function nextTrack(songId) {
 				id: song._id,
 				url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
 				onfinish: function() {
-					let songIndex = playlist.songs.indexOf(songId);
+					let songIndex = playlist.songs.indexOf(songId),
+						nextSongId;
 					if (songIndex >= 0 && songIndex < songs.length - 1) {
 						nextSongId = songs[songIndex + 1];
-						nextTrack(nextSongId);
 					}
+					else if (songIndex >= songs.length - 1) {
+						nextSongId = songs[0];
+					}
+					nextTrack(nextSongId);
 				}
 			});
 
