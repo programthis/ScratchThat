@@ -56,7 +56,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 	updateUserProfile: function(attribute, value) {
-		Meteor.users.update({}, {
+		Meteor.users.update({_id: Meteor.userId()}, {
 			$set: {
 				["profile." + attribute]: value
 			}
