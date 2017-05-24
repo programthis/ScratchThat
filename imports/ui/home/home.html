@@ -7,4 +7,16 @@
 			<img src="images/record_centre.png">
 		</div>
 	</div>
+	<div class="mobilePlayerControls">
+		{{#if currentUser.profile.isPlaying}}
+			<div class="play mobilePause">
+				<div></div>
+				<div></div>
+			</div>
+		{{else}}
+			<div class="play mobilePlay">
+				&#9654;
+			</div>
+		{{/if}}
+	</div>
 </template>

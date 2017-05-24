@@ -1,0 +1,76 @@
+@import "../mixins";
+
+.recordContainer {
+    width: 570px;
+    height: 570px;
+    position: relative;
+    top: 45%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    cursor: pointer;
+
+    .avatar {
+        height: 300px;
+        width: 300px;
+        overflow: hidden;
+        position: absolute;
+        margin: auto;
+        border-radius: 300px;
+        border: 5px solid black;
+        left: 50%;
+        margin-left: -160px;
+        top: 50%;
+        margin-top: -160px;
+
+        img {
+            height: 300px;
+            margin: 0 auto;
+        }
+    }
+
+    .record {
+        height: 550px;
+        width: 550px;
+        overflow: hidden;
+        position: absolute;
+        margin: auto;
+
+        img {
+            height: 550px;
+            margin: auto;
+            position: absolute;
+        }
+    }
+}
+
+.mobilePlayerControls {
+    display: none;
+}
+
+@media all and (max-width: 50em) {
+    .recordContainer {
+        display: none;
+    }
+
+    .mobilePlayerControls {
+        @include flex-align;
+        width: 100%;
+        height: 90%;
+        cursor: pointer;
+
+        .mobilePlay {
+            font-size: 250px;
+            color: silver;
+        }
+
+        .mobilePause {
+            div {
+                display: inline-block;
+                width: 70px;
+                height: 200px;
+                margin-left: 5px;
+                background-color: silver;
+            }
+        }
+    }
+}
