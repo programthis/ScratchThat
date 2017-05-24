@@ -1,5 +1,21 @@
 <template name="playlist">
-	<div class="syncSoundCloud">
-		Sync with SOUNDCLOUD
-	</div>
+	<table class="playlistTable">
+		{{#each songs}}
+			<tr>
+				<td>
+					{{#with song this}}
+						{{name}}
+					{{/with}}
+				</td>
+				<td class="delete">
+					Delete
+				</td>
+			</tr>
+		{{/each}}
+		<tr>
+			<td class="syncSoundCloud">
+				Sync with SOUNDCLOUD
+			</td>
+		</tr>
+	</table>
 </template>

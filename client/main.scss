@@ -70,6 +70,7 @@ form {
     position: absolute;
     height: 100px;
     bottom: 0;
+    z-index: -1;
 
     .bar {
         background-color: black;
@@ -140,4 +141,26 @@ form {
                     -ms-user-select: none; /* Internet Explorer/Edge */
                         user-select: none; /* Non-prefixed version, currently
                                     not supported by any browser */
+}
+
+table {
+    font-family: arial;
+    border-collapse: collapse;
+
+    tr {
+        th, td {
+            @include animation-transition(0.2s);
+            border: 1px solid grey;
+            background-color: silver;
+            padding: 5px;
+
+            &:hover {
+                background-color: #a0a0a0;
+            }
+
+            &.delete {
+                cursor: pointer;
+            }
+        }
+    }
 }
