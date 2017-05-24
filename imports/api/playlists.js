@@ -28,18 +28,6 @@ if (Meteor.isServer) {
 	Meteor.publish("playlists", function() {
 		return Playlists.find({});
 	});
-
-	Meteor.startup(function() {
-		let playlist = Playlists.findOne({});
-		if (playlist && !playlist.nowPlaying) {
-			let songId = playlist.songs[0];
-			Playlists.update({_id: playlist._id}, {
-				$set: {
-					nowPlaying: songId
-				}
-			});
-		}
-	});
 }
 
 Meteor.methods({

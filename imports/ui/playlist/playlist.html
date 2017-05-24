@@ -3,11 +3,9 @@
 		{{#each songs}}
 			<tr>
 				<td>
-					{{#with song this}}
-						<a href="{{this.sourceUrl}}" target="_blank">
-							{{name}}
-						</a>
-					{{/with}}
+					<a href="{{this.sourceUrl}}" target="_blank">
+						{{name}}
+					</a>
 				</td>
 				<td class="delete">
 					Delete

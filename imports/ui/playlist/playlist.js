@@ -16,17 +16,9 @@ Template.playlist.helpers({
 	songs: function() {
 		let playlist = Playlists.findOne({});
 		if (playlist) {
-			let songs = playlist.songs;
+			let songIds = playlist.songs;
+				songs = Songs.find({"_id": {"$in": songIds}});
 			return songs;
-		}
-		else {
-			return false;
-		}
-	},
-	song: function(songId) {
-		let song = Songs.findOne(songId);
-		if (song) {
-			return song;
 		}
 		else {
 			return false;
@@ -38,5 +30,10 @@ Template.playlist.events({
 	"click .syncSoundCloud": function(evt) {
 		evt.preventDefault();
 		Meteor.call("syncSoundCloud");
+	},
+	"click .delete": function(evt) {
+		evt.preventDefault();
+		let songId = this._id;
+		Meteor.call("deleteSong", songId);
 	}
 })

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Playlists } from './playlists.js';
 
 export const Songs = new Mongo.Collection("songs");
 
@@ -37,6 +38,16 @@ Meteor.methods({
 			url: url,
 			userId: Meteor.userId(),
 			sourceUrl: sourceUrl
+		});
+	},
+	deleteSong: function(songId) {
+		console.log("Deleting song from playlist...");
+		// Songs.remove(songId);
+		let playlist = Playlists.findOne({});
+		Playlists.update({_id: playlist._id}, {
+			$pull: {
+				songs: songId
+			}
 		});
 	}
 });
