@@ -10,7 +10,7 @@ Schemas.UserProfile = new SimpleSchema({
     isPlaying: {
     	type: Boolean,
     	label: "isPlaying Flag",
-    	defaultValue: true
+    	defaultValue: false
     },
     isAdmin: {
     	type: Boolean,

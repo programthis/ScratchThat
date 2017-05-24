@@ -57,47 +57,56 @@ Template.layout.events({
 	"click .play, click .recordContainer.loggedIn": function(evt) {
 		evt.preventDefault();
 		let isPlaying = Meteor.user().profile.isPlaying,
-			playlist = Playlists.findOne({}),
-			songs = playlist.songs,
-			songId = playlist.nowPlaying,
+			playlist = Playlists.findOne({});
+
+		if (playlist) {
+			let songs = playlist.songs,
+				songId,
+				song;
+		
+			playlist.nowPlaying ? songId = playlist.nowPlaying : songId = songs[0];
 			song = Songs.findOne(songId);
 
-		if (isPlaying) {
-			isPlaying = false;
+			if (isPlaying) {
+				isPlaying = false;
+			}
+			else {
+				isPlaying = true;
+			}
+			Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+			Meteor.call("updateNowPlaying", songId);
+
+			soundManager.setup({
+				url: 'swf/',
+				onready: function() {
+					mySound = soundManager.createSound({
+						id: song._id,
+						url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+						onfinish: function() {
+							let songIndex = playlist.songs.indexOf(songId),
+								nextSongId;
+							if (songIndex >= 0 && songIndex < songs.length - 1) {
+								nextSongId = songs[songIndex + 1];
+							}
+							else if (songIndex >= songs.length - 1) {
+								nextSongId = songs[0];
+							}
+							nextTrack(nextSongId);
+						}
+					});
+
+					if (isPlaying){
+						mySound.play();
+					}
+					else {
+						mySound.pause();
+					}
+				}
+			});
 		}
 		else {
-			isPlaying = true;
+			console.log("Sorry, no playlist available...");
 		}
-		Meteor.call("updateUserProfile", "isPlaying", isPlaying);
-		Meteor.call("updateNowPlaying", songId);
-		
-		soundManager.setup({
-			url: 'swf/',
-			onready: function() {
-				mySound = soundManager.createSound({
-					id: song._id,
-					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
-					onfinish: function() {
-						let songIndex = playlist.songs.indexOf(songId),
-							nextSongId;
-						if (songIndex >= 0 && songIndex < songs.length - 1) {
-							nextSongId = songs[songIndex + 1];
-						}
-						else if (songIndex >= songs.length - 1) {
-							nextSongId = songs[0];
-						}
-						nextTrack(nextSongId);
-					}
-				});
-
-				if (isPlaying){
-					mySound.play();
-				}
-				else {
-					mySound.pause();
-				}
-			}
-		});
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
