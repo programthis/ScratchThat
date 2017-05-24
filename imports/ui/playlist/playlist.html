@@ -4,7 +4,9 @@
 			<tr>
 				<td>
 					{{#with song this}}
-						{{name}}
+						<a href="{{this.sourceUrl}}" target="_blank">
+							{{name}}
+						</a>
 					{{/with}}
 				</td>
 				<td class="delete">

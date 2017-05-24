@@ -76,7 +76,7 @@ Meteor.methods({
 			playlist = client.getSync('/me/playlists', {limit : 1});
 
 		playlist[0].tracks.forEach(function(track) {
-			Meteor.call("addSong", track.title, track.stream_url, function(error, result) {
+			Meteor.call("addSong", track.title, track.stream_url, track.permalink_url, function(error, result) {
 				if (error) {
 				}
 				else {
