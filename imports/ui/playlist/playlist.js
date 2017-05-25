@@ -40,8 +40,12 @@ Template.playlist.events({
 			else {
 				let songs = result;
 				songs.forEach(function(song) {
-					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' permalink_url='" + song.permalink_url + "'>" + song.title + "</div>");
+					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' permalink_url='" + song.permalink_url + "'> \
+										<div class='resultImage'><img src='" + song.artwork_url + "'></img></div>"
+										+ song.title +
+									"</div>");
 					$(".songSearchResults").append(result);
+					console.log(song);
 				});
 			}
 		});

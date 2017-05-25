@@ -11,8 +11,7 @@ Songs.attachSchema(new SimpleSchema({
 	},
 	url: {
 		type: String,
-		label: "Song Url",
-		unique: true
+		label: "Song Url"
 	},
 	userId: {
 		type: String,
@@ -20,8 +19,7 @@ Songs.attachSchema(new SimpleSchema({
 	},
 	sourceUrl: {
 		type: String,
-		label: "Source URL",
-		unique: true
+		label: "Source URL"
 	}
 }));
 
