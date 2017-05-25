@@ -12,15 +12,19 @@
 				<td class="skipToSong">
 					{{name}}
 				</td>
-				<td class="delete">
-					Delete
-				</td>
+				{{#if currentUser.profile.isAdmin}}
+					<td class="delete">
+						Delete
+					</td>
+				{{/if}}
 			</tr>
 		{{/each}}
+		{{#if currentUser.profile.isAdmin}}
+			<tr>
+				<td class="syncSoundCloud">
+					Sync with SOUNDCLOUD
+				</td>
+			</tr>
+		{{/if}}
 	</table>
-	{{#if currentUser.profile.isAdmin}}
-		<button class="syncSoundCloud">
-			Sync with SOUNDCLOUD
-		</button>
-	{{/if}}
 </template>
