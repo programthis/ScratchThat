@@ -123,6 +123,40 @@ Template.layout.events({
 			nextSongId = songs[0];
 		}
 		nextTrack(nextSongId);
+	},
+	"click .skipToSong": function(evt) {
+		evt.preventDefault();
+		let songId = this._id,
+			song = Songs.findOne(songId);
+
+		if (mySound) {
+			mySound.stop();	
+		}
+
+		Meteor.call("updateUserProfile", "isPlaying", true);
+		Meteor.call("updateNowPlaying", songId);
+
+		soundManager.setup({
+			url: 'swf/',
+			onready: function() {
+				mySound = soundManager.createSound({
+					id: song._id,
+					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+					onfinish: function() {
+						let songIndex = playlist.songs.indexOf(songId),
+							nextSongId;
+						if (songIndex >= 0 && songIndex < songs.length - 1) {
+							nextSongId = songs[songIndex + 1];
+						}
+						else if (songIndex >= songs.length - 1) {
+							nextSongId = songs[0];
+						}
+						nextTrack(nextSongId);
+					}
+				});
+				mySound.play();
+			}
+		});
 	}
 });
 
