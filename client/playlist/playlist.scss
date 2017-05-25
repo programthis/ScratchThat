@@ -14,6 +14,10 @@
 				&.delete {
 					text-align: center;
 				}
+
+				&.isPlaying {
+					background-color: #5b90a7;
+				}
 			}
 		}
 	}

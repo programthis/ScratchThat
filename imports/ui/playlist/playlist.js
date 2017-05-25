@@ -27,6 +27,22 @@ Template.playlist.helpers({
 		else {
 			return false;
 		}
+	},
+	isPlaying: function() {
+		let songId = this._id,
+			playlist = Playlists.findOne({});
+		if (playlist) {
+			let nowPlaying = playlist.nowPlaying;
+			if (nowPlaying === songId) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 });
 
@@ -41,12 +57,11 @@ Template.playlist.events({
 				let songs = result;
 				$(".result").remove();
 				songs.forEach(function(song) {
-					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' permalink_url='" + song.permalink_url + "'> \
+					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' artwork_url='" + song.artwork_url + "'> \
 										<div class='resultImage'><img src='" + song.artwork_url + "'></img></div>"
 										+ song.title +
 									"</div>");
 					$(".songSearchResults").append(result);
-					console.log(song);
 				});
 			}
 		});
@@ -55,8 +70,8 @@ Template.playlist.events({
 		evt.preventDefault();
 		let name = $(evt.currentTarget).attr("name"),
 			stream_url = $(evt.currentTarget).attr("stream_url"),
-			permalink_url = $(evt.currentTarget).attr("permalink_url");
-		Meteor.call("addSong", name, stream_url, permalink_url, function(error, result) {
+			artwork_url = $(evt.currentTarget).attr("artwork_url");
+		Meteor.call("addSong", name, stream_url, artwork_url, function(error, result) {
 			if (error) {
 			}
 			else {

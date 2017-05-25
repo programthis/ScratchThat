@@ -17,9 +17,9 @@ Songs.attachSchema(new SimpleSchema({
 		type: String,
 		label: "User ID"
 	},
-	sourceUrl: {
+	artworkUrl: {
 		type: String,
-		label: "Source URL"
+		label: "Artwork URL"
 	}
 }));
 
@@ -30,12 +30,12 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-	addSong: function(name, url, sourceUrl) {
+	addSong: function(name, url, artworkUrl) {
 		return Songs.insert({
 			name: name,
 			url: url,
 			userId: Meteor.userId(),
-			sourceUrl: sourceUrl
+			artworkUrl: artworkUrl
 		});
 	},
 	deleteSong: function(songId) {
