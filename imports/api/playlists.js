@@ -72,7 +72,6 @@ Meteor.methods({
 		Meteor.call("addPlaylist", "Main Playlist", function(error, result){});
 
 		let client = Soundcloud.getClient(),
-			me = client.getSync('/me', {limit : 1}),
 			playlist = client.getSync('/me/playlists', {limit : 1});
 
 		playlist[0].tracks.forEach(function(track) {

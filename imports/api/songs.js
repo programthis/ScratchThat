@@ -49,5 +49,23 @@ Meteor.methods({
 				songs: songId
 			}
 		});
+	},
+	searchSong: function(text) {
+		console.log("Searching for song(s)...");
+		let client_id = Meteor.settings.private.sc_client_id,
+			client_secret = Meteor.settings.private.sc_client_secret,
+			username = Meteor.settings.private.sc_username,
+			password = Meteor.settings.private.sc_password;
+
+		Soundcloud.setConfig({
+			client_id : client_id,
+			client_secret : client_secret,
+			username : username,
+			password: password
+		});
+
+		let client = Soundcloud.getClient(),
+			tracks = client.getSync('/tracks', {limit: 7, q: text});
+		return tracks;
 	}
 });

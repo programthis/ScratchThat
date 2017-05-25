@@ -1,4 +1,14 @@
 <template name="playlist">
+	<div class="playlistControls">
+		<form class="songSearchForm">
+			<input type="text" class="songSearchInput" placeholder="Add Song to Playlist" >
+		</form>
+		<div class="songSearchResults">
+			<div class="result">
+				TEST RESULT
+			</div>
+		</div>
+	</div>
 	<table class="playlistTable">
 		{{#each songs}}
 			<tr>
@@ -12,10 +22,10 @@
 				</td>
 			</tr>
 		{{/each}}
-		<tr>
-			<td class="syncSoundCloud">
-				Sync with SOUNDCLOUD
-			</td>
-		</tr>
 	</table>
+	{{#if currentUser.profile.isAdmin}}
+		<button class="syncSoundCloud">
+			Sync with SOUNDCLOUD
+		</button>
+	{{/if}}
 </template>

@@ -4,6 +4,37 @@
 	width: 100%;
 }
 
+.playlistControls {
+	width: 50%;
+	margin: 10px auto;
+	font-family: arial;
+	position: relative;
+	
+	.songSearchForm {
+		position: relative;
+
+		input {
+			width: 100%;
+		}
+	}
+
+	.songSearchResults {
+		width: 100%;
+		position: absolute;
+
+		.result {
+			@include animation-transition(0.2s);
+			padding: 5px;
+			background-color: white;
+			cursor: pointer;
+
+			&:hover {
+				background-color: silver;
+			}
+		}
+	}
+}
+
 .syncSoundCloud {
 	cursor: pointer;
 }

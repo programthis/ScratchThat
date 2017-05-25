@@ -12,6 +12,10 @@ Template.playlist.onCreated(function() {
 	});
 });
 
+Template.playlist.onRendered(function() {
+	$(".songSearchInput").focus();
+});
+
 Template.playlist.helpers({
 	songs: function() {
 		let playlist = Playlists.findOne({});
@@ -27,6 +31,35 @@ Template.playlist.helpers({
 });
 
 Template.playlist.events({
+	"keyup .songSearchInput": _.debounce(function(evt) {
+		evt.preventDefault();
+		let text = $(".songSearchInput").val();
+		Meteor.call("searchSong", text, function(error, result) {
+			if (error) {
+			}
+			else {
+				let songs = result;
+				songs.forEach(function(song) {
+					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' permalink_url='" + song.permalink_url + "'>" + song.title + "</div>");
+					$(".songSearchResults").append(result);
+				});
+			}
+		});
+	}, 400),
+	"click .result": function(evt) {
+		evt.preventDefault();
+		let name = $(evt.currentTarget).attr("name"),
+			stream_url = $(evt.currentTarget).attr("stream_url"),
+			permalink_url = $(evt.currentTarget).attr("permalink_url");
+		Meteor.call("addSong", name, stream_url, permalink_url, function(error, result) {
+			if (error) {
+			}
+			else {
+				$(".result").remove();
+				Meteor.call("addSongToPlaylist", result);
+			}
+		});
+	},
 	"click .syncSoundCloud": function(evt) {
 		evt.preventDefault();
 		Meteor.call("syncSoundCloud");
