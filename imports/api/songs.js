@@ -63,7 +63,7 @@ Meteor.methods({
 		});
 
 		let client = Soundcloud.getClient(),
-			tracks = client.getSync('/tracks', {limit: 7, q: text});
+			tracks = client.getSync('/tracks', {limit: 10, q: text});
 		return tracks;
 	}
 });
