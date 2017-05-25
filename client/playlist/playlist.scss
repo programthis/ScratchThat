@@ -1,14 +1,19 @@
 @import "../mixins";
 
-.playlistTable {
-	width: 100%;
+.playlistTableContiner {
+	height: 50%;
+	overflow: auto;
+	
+	.playlistTable {
+		width: 100%;
 
-	tr {
-		td {
-			cursor: pointer;
+		tr {
+			td {
+				cursor: pointer;
 
-			&.delete {
-				text-align: center;
+				&.delete {
+					text-align: center;
+				}
 			}
 		}
 	}

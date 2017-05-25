@@ -6,25 +6,27 @@
 		<div class="songSearchResults">
 		</div>
 	</div>
-	<table class="playlistTable">
-		{{#each songs}}
-			<tr>
-				<td class="skipToSong">
-					{{name}}
-				</td>
-				{{#if currentUser.profile.isAdmin}}
-					<td class="delete">
-						Delete
+	<div class="playlistTableContiner">
+		<table class="playlistTable">
+			{{#each songs}}
+				<tr>
+					<td class="skipToSong">
+						{{name}}
 					</td>
-				{{/if}}
-			</tr>
-		{{/each}}
-		{{#if currentUser.profile.isAdmin}}
-			<tr>
-				<td class="syncSoundCloud">
-					Sync with SOUNDCLOUD
-				</td>
-			</tr>
-		{{/if}}
-	</table>
+					{{#if currentUser.profile.isAdmin}}
+						<td class="delete">
+							Delete
+						</td>
+					{{/if}}
+				</tr>
+			{{/each}}
+			{{#if currentUser.profile.isAdmin}}
+				<tr>
+					<td class="syncSoundCloud">
+						Sync with SOUNDCLOUD
+					</td>
+				</tr>
+			{{/if}}
+		</table>
+	</div>
 </template>
