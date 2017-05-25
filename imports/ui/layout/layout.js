@@ -126,7 +126,9 @@ Template.layout.events({
 	},
 	"click .skipToSong": function(evt) {
 		evt.preventDefault();
-		let songId = this._id,
+		let playlist = Playlists.findOne({}),
+			songs = playlist.songs,
+			songId = this._id,
 			song = Songs.findOne(songId);
 
 		if (mySound) {
