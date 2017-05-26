@@ -88,5 +88,8 @@ Template.playlist.events({
 		evt.preventDefault();
 		let songId = this._id;
 		Meteor.call("deleteSong", songId);
+	},
+	"submit .songSearchForm": function(evt) {
+		evt.preventDefault();
 	}
 })
