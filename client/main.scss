@@ -113,14 +113,6 @@ table {
             border: 1px solid grey;
             background-color: silver;
             padding: 5px;
-
-            &:hover {
-                background-color: #a0a0a0;
-            }
-
-            &.delete {
-                cursor: pointer;
-            }
         }
     }
 }

@@ -10,7 +10,7 @@
 		<table class="playlistTable">
 			{{#each songs}}
 				<tr>
-					<td class="skipToSong {{#if isPlaying}}isPlaying{{/if}}" title="{{#if isPlaying}}Now Playing{{/if}}">
+					<td class="{{#if currentUser.profile.isAdmin}}skipToSong{{/if}} {{#if isPlaying}}isPlaying{{/if}}" title="{{#if isPlaying}}Now Playing{{/if}}">
 						{{name}}
 					</td>
 					{{#if currentUser.profile.isAdmin}}

@@ -9,10 +9,22 @@
 
 		tr {
 			td {
-				cursor: pointer;
+
+				&.skipToSong {
+					cursor: pointer;
+
+					&:hover {
+					    background-color: #a0a0a0;
+					}
+				}
 
 				&.delete {
 					text-align: center;
+					cursor: pointer;
+
+					&:hover {
+					    background-color: #a95050;
+					}
 				}
 
 				&.isPlaying {
