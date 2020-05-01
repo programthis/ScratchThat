@@ -41,7 +41,6 @@ Template.layout.onRendered(function() {
 			$(".sound_bar span").addClass("bar");
 			$(".sound_bar span").last().css("left", i*150);
 		}
-
 		$(".bar").each(function(i) {
 		    fluctuate($(this));
 		});
@@ -49,7 +48,7 @@ Template.layout.onRendered(function() {
 });
 
 Template.layout.events({
-	"click .play, click .recordContainer.loggedIn": function(evt) {
+	"click .play, click .recordContainer": function(evt) {
 		evt.preventDefault();
 		let isPlaying = Session.get("isPlaying"),
 			playlist = Playlists.findOne({});
@@ -59,7 +58,6 @@ Template.layout.events({
 				song;
 			playlist.nowPlaying ? songId = playlist.nowPlaying : songId = songs[0];
 			song = Songs.findOne(songId);
-
 			if (isPlaying) {
 				isPlaying = false;
 			}
@@ -107,7 +105,6 @@ Template.layout.events({
 			songs = playlist.songs,
 			songIndex = playlist.songs.indexOf(songId),
 			nextSongId;
-
 		if (songIndex >= 0 && songIndex < songs.length - 1) {
 			nextSongId = songs[songIndex + 1];
 		}
