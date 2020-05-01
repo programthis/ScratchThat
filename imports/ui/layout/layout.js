@@ -47,6 +47,18 @@ Template.layout.onRendered(function() {
 	});
 });
 
+Template.layout.helpers({
+	isPlaying: function() {
+		if (Session.get("isPlaying")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+});
+
+
 Template.layout.events({
 	"click .play, click .recordContainer": function(evt) {
 		evt.preventDefault();
