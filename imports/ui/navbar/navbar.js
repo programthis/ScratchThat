@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { Songs } from '../../api/songs.js';
 import { Playlists } from '../../api/playlists.js';
 
@@ -19,6 +20,14 @@ Template.navbar.helpers({
 			let songId = playlist.nowPlaying,
 				song = Songs.findOne(songId);
 			return song;
+		}
+		else {
+			return false;
+		}
+	},
+	isPlaying: function() {
+		if (Session.get("isPlaying")) {
+			return true;
 		}
 		else {
 			return false;

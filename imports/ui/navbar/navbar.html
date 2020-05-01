@@ -6,7 +6,7 @@
 					<a href="{{pathFor route="home"}}">SCRATCH THAT</a>
 				</span>
 				<span class="play">
-					{{#if currentUser.profile.isPlaying}}
+					{{#if isPlaying}}
 						<span class="soundControl">
 							<span>NOW PLAYING</span>
 							<span>{{song.name}}</span>

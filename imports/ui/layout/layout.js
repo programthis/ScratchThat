@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { Songs } from '../../api/songs.js';
 import { Playlists } from '../../api/playlists.js';
 
@@ -12,31 +13,25 @@ Template.layout.onRendered(function() {
 		numBars = Math.round(windowSize / 150),
 		angle = 0,
 		angleIncrease = 3;
-
 	for (var i = 0; i < numBars; i++) {
 		$(".sound_bar").append("<span>");
 		$(".sound_bar span").addClass("bar");
 		$(".sound_bar span").last().css("left", i*150);
 	}
-
 	$(".bar").each(function(i) {
 	    fluctuate($(this));
 	});
-
 	var interval = setInterval(function() {
-		if (Meteor.user() && Meteor.user().profile) {
-			let isPlaying = Meteor.user().profile.isPlaying;
-			if (isPlaying) {
-				angleIncrease = 3;
-			}
-			else {
-				angleIncrease = 0;
-			}
+		let isPlaying = Session.get("isPlaying");
+		if (isPlaying) {
+			angleIncrease = 3;
+		}
+		else {
+			angleIncrease = 0;
 		}
 	    angle+=angleIncrease;
 	    $(".recordContainer .record").rotate(angle);
 	}, 17);
-
 	$(window).resize(function() {
 		windowSize = $(window).width();
 		numBars = Math.round(windowSize / 150);
@@ -56,14 +51,12 @@ Template.layout.onRendered(function() {
 Template.layout.events({
 	"click .play, click .recordContainer.loggedIn": function(evt) {
 		evt.preventDefault();
-		let isPlaying = Meteor.user().profile.isPlaying,
+		let isPlaying = Session.get("isPlaying"),
 			playlist = Playlists.findOne({});
-
 		if (playlist) {
 			let songs = playlist.songs,
 				songId,
 				song;
-		
 			playlist.nowPlaying ? songId = playlist.nowPlaying : songId = songs[0];
 			song = Songs.findOne(songId);
 
@@ -73,7 +66,7 @@ Template.layout.events({
 			else {
 				isPlaying = true;
 			}
-			Meteor.call("updateUserProfile", "isPlaying", isPlaying);
+			Session.set({"isPlaying": isPlaying});
 			Meteor.call("updateNowPlaying", songId);
 
 			soundManager.setup({
@@ -94,7 +87,6 @@ Template.layout.events({
 							nextTrack(nextSongId);
 						}
 					});
-
 					if (isPlaying){
 						mySound.play();
 					}
@@ -130,14 +122,11 @@ Template.layout.events({
 			songs = playlist.songs,
 			songId = this._id,
 			song = Songs.findOne(songId);
-
 		if (mySound) {
 			mySound.stop();	
 		}
-
-		Meteor.call("updateUserProfile", "isPlaying", true);
+		Session.set({"isPlaying": true});
 		Meteor.call("updateNowPlaying", songId);
-
 		soundManager.setup({
 			url: 'swf/',
 			onready: function() {
@@ -170,7 +159,7 @@ function nextTrack(songId) {
 	songId = songs[nextSongIndex];
 
 	let song = Songs.findOne(songId),
-		isPlaying = Meteor.user().profile.isPlaying;
+		isPlaying = Session.get("isPlaying");
 
 	Meteor.call("updateNowPlaying", songId);
 	if (mySound) {
@@ -194,7 +183,6 @@ function nextTrack(songId) {
 					nextTrack(nextSongId);
 				}
 			});
-
 			if (isPlaying){
 				mySound.play();
 			}

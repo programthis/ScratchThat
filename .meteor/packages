@@ -28,3 +28,4 @@ monbro:soundcloud-nodejs-api-wrapper
 dynamic-import@0.5.2
 underscore@1.0.10
 jquery
+session
