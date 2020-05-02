@@ -7,7 +7,7 @@ import "../../ui/login/login.js";
 import "../../ui/register/register.js";
 import "../../ui/playlist/playlist.js";
 
-document.title = "ScratchThat";
+document.title = "Scratch That";
 
 FlowRouter.route('/', {
 	name: 'home',

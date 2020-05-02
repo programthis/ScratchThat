@@ -4,7 +4,7 @@
 		<span class="bg bg-3"></span>
 		<span class="bg bg-1"></span>
 		<span class="bg bg-2"></span>
-		<div class="sound_bar"></div>
+		<div class="sound_bar {{#if isPlaying}}isPlaying{{/if}}"></div>
 		{{> Template.dynamic template=main}}
 	</div>
 	{{> navbar}}
