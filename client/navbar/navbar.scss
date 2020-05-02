@@ -4,6 +4,7 @@
 
 .navbar {
 	@include flex-align-no-justify;
+	@include no-select;
 	font-family: arial;
 	background-image: linear-gradient(to bottom, #05212C 0%, #222 100%);
 	border: 1px solid #080808;
