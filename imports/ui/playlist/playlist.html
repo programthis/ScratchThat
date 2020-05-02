@@ -10,7 +10,7 @@
 		<table class="playlistTable">
 			<tr>
 				<th>
-					Name
+					Song Name
 				</th>
 				<th>
 					Video URL
@@ -28,10 +28,10 @@
 						{{name}}
 					</td>
 					<td>
-						<input type="text" value={{videoUrl}} >
+						<input type="text" value={{videoUrl}} class="updateVideoUrl" />
 					</td>
 					<td>
-						<input type="text" value={{artworkUrl}} >
+						<input type="text" value={{artworkUrl}} class="updateArtworkUrl" />
 					</td>
 					{{#if currentUser.profile.isAdmin}}
 						<td class="delete">

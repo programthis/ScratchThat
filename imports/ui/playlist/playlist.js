@@ -96,5 +96,17 @@ Template.playlist.events({
 	},
 	"submit .songSearchForm": function(evt) {
 		evt.preventDefault();
+	},
+	"focusout .updateVideoUrl": function(evt) {
+		evt.preventDefault();
+		let songId = this._id,
+			videoUrl = $(evt.target).val();
+		Meteor.call("updateSongVideoUrl", {songId, videoUrl});
+	},
+	"focusout .updateArtworkUrl": function(evt) {
+		evt.preventDefault();
+		let songId = this._id,
+			artworkUrl = $(evt.target).val();
+		Meteor.call("updateArtworkUrl", {songId, artworkUrl});
 	}
 })
