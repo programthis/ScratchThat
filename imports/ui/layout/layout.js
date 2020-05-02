@@ -13,6 +13,7 @@ Template.layout.onRendered(function() {
 		numBars = Math.round(windowSize / 150),
 		angle = 0,
 		angleIncrease = 3;
+	$(".bar").removeClass();
 	for (var i = 0; i < numBars; i++) {
 		$(".sound_bar").append("<span>");
 		$(".sound_bar span").addClass("bar");
@@ -36,6 +37,7 @@ Template.layout.onRendered(function() {
 		windowSize = $(window).width();
 		numBars = Math.round(windowSize / 150);
 		$(".sound_bar").empty();
+		$(".bar").removeClass();
 		for (var i = 0; i < numBars;i++){
 			$(".sound_bar").append("<span>");
 			$(".sound_bar span").addClass("bar");
