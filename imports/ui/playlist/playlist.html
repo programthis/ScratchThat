@@ -8,10 +8,30 @@
 	</div>
 	<div class="playlistTableContiner">
 		<table class="playlistTable">
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Video URL
+				</th>
+				<th>
+					Artwork URL
+				</th>
+				<th>
+					Delete
+				</th>
+			</tr>
 			{{#each songs}}
 				<tr>
 					<td class="{{#if currentUser.profile.isAdmin}}skipToSong{{/if}} {{#if isPlaying}}isPlaying{{/if}}" title="{{#if isPlaying}}Now Playing{{/if}}">
 						{{name}}
+					</td>
+					<td>
+						<input type="text" value={{videoUrl}} >
+					</td>
+					<td>
+						<input type="text" value={{artworkUrl}} >
 					</td>
 					{{#if currentUser.profile.isAdmin}}
 						<td class="delete">

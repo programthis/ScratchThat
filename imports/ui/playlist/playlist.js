@@ -50,21 +50,26 @@ Template.playlist.events({
 	"keyup .songSearchInput": _.debounce(function(evt) {
 		evt.preventDefault();
 		let text = $(".songSearchInput").val();
-		Meteor.call("searchSong", text, function(error, result) {
-			if (error) {
-			}
-			else {
-				let songs = result;
-				$(".result").remove();
-				songs.forEach(function(song) {
-					let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' artwork_url='" + song.artwork_url + "'> \
-										<div class='resultImage'><img src='" + song.artwork_url + "'></img></div>"
-										+ song.title +
-									"</div>");
-					$(".songSearchResults").append(result);
-				});
-			}
-		});
+		if (text.length > 0) {
+			Meteor.call("searchSong", text, function(error, result) {
+				if (error) {
+				}
+				else {
+					let songs = result;
+					$(".result").remove();
+					songs.forEach(function(song) {
+						let result = $("<div class='result' name='" + song.title + "' stream_url='" + song.stream_url + "' artwork_url='" + song.artwork_url + "'> \
+											<div class='resultImage'><img src='" + song.artwork_url + "'></img></div>"
+											+ song.title +
+										"</div>");
+						$(".songSearchResults").append(result);
+					});
+				}
+			});
+		}
+		else {
+			$(".songSearchResults").empty();
+		}
 	}, 400),
 	"click .result": function(evt) {
 		evt.preventDefault();
