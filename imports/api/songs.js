@@ -20,6 +20,10 @@ Songs.attachSchema(new SimpleSchema({
 	artworkUrl: {
 		type: String,
 		label: "Artwork URL"
+	},
+	videoUrl: {
+		type: String,
+		label: "Video URL"
 	}
 }));
 
@@ -40,7 +44,7 @@ Meteor.methods({
 	},
 	deleteSong: function(songId) {
 		console.log("Deleting song from playlist...");
-		// Songs.remove(songId);
+		Songs.remove(songId);
 		let playlist = Playlists.findOne({});
 		Playlists.update({_id: playlist._id}, {
 			$pull: {
