@@ -11,6 +11,7 @@ var mySound;
 Template.layout.onCreated(function() {
 	$(window).on('keyup', function(evt) {
 		let keyCode = evt.keyCode;
+		console.log(keyCode);
 		if (keyCode === 32) {
 			playSong();
 		}

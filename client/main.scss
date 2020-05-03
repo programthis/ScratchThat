@@ -63,14 +63,23 @@ form {
     background-color: $primary-brown;
     height: 47%;
     bottom: 30%;
+    overflow: hidden;
 }
 
 .bg-2 {
-    bottom:0;
+    bottom: 0;
 }
 
 .bg-3 {
     bottom: 77%;
+}
+
+iframe {
+    -moz-transform:scale(1.5);
+    -webkit-transform:scale(1.5);
+    -o-transform:scale(1.5);
+    -ms-transform:scale(1.5);
+    transform:scale(1.5);
 }
 
 .sound_bar {
