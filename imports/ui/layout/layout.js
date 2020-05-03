@@ -8,6 +8,15 @@ import "../navbar/navbar.js";
 
 var mySound;
 
+Template.layout.onCreated(function() {
+	$(window).on('keyup', function(evt) {
+		let keyCode = evt.keyCode;
+		if (keyCode === 32) {
+			playSong();
+		}
+	});
+});
+
 Template.layout.onRendered(function() {
 	let windowSize = $(window).width(),
 		numBars = Math.round(windowSize / 150),
@@ -64,53 +73,7 @@ Template.layout.helpers({
 Template.layout.events({
 	"click .play, click .recordContainer": function(evt) {
 		evt.preventDefault();
-		let isPlaying = Session.get("isPlaying"),
-			playlist = Playlists.findOne({});
-		if (playlist) {
-			let songs = playlist.songs,
-				songId,
-				song;
-			playlist.nowPlaying ? songId = playlist.nowPlaying : songId = songs[0];
-			song = Songs.findOne(songId);
-			if (isPlaying) {
-				isPlaying = false;
-			}
-			else {
-				isPlaying = true;
-			}
-			Session.set({"isPlaying": isPlaying});
-			Meteor.call("updateNowPlaying", songId);
-
-			soundManager.setup({
-				url: 'swf/',
-				onready: function() {
-					mySound = soundManager.createSound({
-						id: song._id,
-						url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
-						onfinish: function() {
-							let songIndex = playlist.songs.indexOf(songId),
-								nextSongId;
-							if (songIndex >= 0 && songIndex < songs.length - 1) {
-								nextSongId = songs[songIndex + 1];
-							}
-							else if (songIndex >= songs.length - 1) {
-								nextSongId = songs[0];
-							}
-							nextTrack(nextSongId);
-						}
-					});
-					if (isPlaying){
-						mySound.play();
-					}
-					else {
-						mySound.pause();
-					}
-				}
-			});
-		}
-		else {
-			console.log("Sorry, no playlist available...");
-		}
+		playSong();
 	},
 	"click .next": function(evt) {
 		evt.preventDefault();
@@ -214,4 +177,54 @@ function fluctuate(bar) {
     }, function() {
         fluctuate($(this));
     });
+}
+
+function playSong() {
+	let isPlaying = Session.get("isPlaying"),
+		playlist = Playlists.findOne({});
+	if (playlist) {
+		let songs = playlist.songs,
+			songId,
+			song;
+		playlist.nowPlaying ? songId = playlist.nowPlaying : songId = songs[0];
+		song = Songs.findOne(songId);
+		if (isPlaying) {
+			isPlaying = false;
+		}
+		else {
+			isPlaying = true;
+		}
+		Session.set({"isPlaying": isPlaying});
+		Meteor.call("updateNowPlaying", songId);
+
+		soundManager.setup({
+			url: 'swf/',
+			onready: function() {
+				mySound = soundManager.createSound({
+					id: song._id,
+					url: song.url + "?client_id=" + Meteor.settings.public.sc_client_id,
+					onfinish: function() {
+						let songIndex = playlist.songs.indexOf(songId),
+							nextSongId;
+						if (songIndex >= 0 && songIndex < songs.length - 1) {
+							nextSongId = songs[songIndex + 1];
+						}
+						else if (songIndex >= songs.length - 1) {
+							nextSongId = songs[0];
+						}
+						nextTrack(nextSongId);
+					}
+				});
+				if (isPlaying){
+					mySound.play();
+				}
+				else {
+					mySound.pause();
+				}
+			}
+		});
+	}
+	else {
+		console.log("Sorry, no playlist available...");
+	}
 }
