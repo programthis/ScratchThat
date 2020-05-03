@@ -19,11 +19,13 @@ Songs.attachSchema(new SimpleSchema({
 	},
 	artworkUrl: {
 		type: String,
-		label: "Artwork URL"
+		label: "Artwork URL",
+		optional: true
 	},
 	videoUrl: {
 		type: String,
-		label: "Video URL"
+		label: "Video URL",
+		optional: true
 	}
 }));
 
