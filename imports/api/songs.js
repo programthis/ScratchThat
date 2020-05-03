@@ -31,45 +31,45 @@ if (Meteor.isServer) {
 	Meteor.publish("songs", function() {
 		return Songs.find({});
 	});
+
+	export const updateSongVideoUrl = new ValidatedMethod({
+	    name: "updateSongVideoUrl",
+	    validate: new SimpleSchema({
+	        songId: { type: String },
+	        videoUrl: { type: String }
+	    }).validator(),
+	    run({ songId, videoUrl }) {
+	    	let user = Meteor.user();
+	        if (!user || !Roles.userIsInRole(user, "admin")) {
+	        	throw new Meteor.Error(403, "Access denied");
+	        }
+	        Songs.update({_id: songId}, {
+	        	$set: {
+	        		videoUrl: videoUrl
+	        	}
+	        });
+	    }
+	});
+
+	export const updateArtworkUrl = new ValidatedMethod({
+	    name: "updateArtworkUrl",
+	    validate: new SimpleSchema({
+	        songId: { type: String },
+	        artworkUrl: { type: String }
+	    }).validator(),
+	    run({ songId, artworkUrl }) {
+	    	let user = Meteor.user();
+	        if (!user || !Roles.userIsInRole(user, "admin")) {
+	        	throw new Meteor.Error(403, "Access denied");
+	        }
+	        Songs.update({_id: songId}, {
+	        	$set: {
+	        		artworkUrl: artworkUrl
+	        	}
+	        });
+	    }
+	});
 }
-
-export const updateSongVideoUrl = new ValidatedMethod({
-    name: "updateSongVideoUrl",
-    validate: new SimpleSchema({
-        songId: { type: String },
-        videoUrl: { type: String }
-    }).validator(),
-    run({ songId, videoUrl }) {
-    	// let user = Meteor.user();
-     //    if (!user || !Roles.userIsInRole(user, "admin")) {
-     //    	throw new Meteor.Error(403, "Access denied");
-     //    }
-        Songs.update({_id: songId}, {
-        	$set: {
-        		videoUrl: videoUrl
-        	}
-        });
-    }
-});
-
-export const updateArtworkUrl = new ValidatedMethod({
-    name: "updateArtworkUrl",
-    validate: new SimpleSchema({
-        songId: { type: String },
-        artworkUrl: { type: String }
-    }).validator(),
-    run({ songId, artworkUrl }) {
-    	// let user = Meteor.user();
-     //    if (!user || !Roles.userIsInRole(user, "admin")) {
-     //    	throw new Meteor.Error(403, "Access denied");
-     //    }
-        Songs.update({_id: songId}, {
-        	$set: {
-        		artworkUrl: artworkUrl
-        	}
-        });
-    }
-});
 
 Meteor.methods({
 	addSong: function(name, url, artworkUrl) {

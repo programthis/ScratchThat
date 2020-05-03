@@ -52,6 +52,25 @@ if (Meteor.isServer) {
 	Meteor.publish("users", function() {
 		return Meteor.users.find({});
 	});
+
+	export const toggleUserAdmin = new ValidatedMethod({
+	    name: "toggleUserAdmin",
+	    validate: new SimpleSchema({
+	        userId: { type: String }
+	    }).validator(),
+	    run({ userId }) {
+	        let user = Meteor.user();
+	        if (!user || !user.profile.isAdmin) {
+	        	throw new Meteor.Error(403, "Access denied");
+	        }
+	        if (Roles.userIsInRole(userId, "admin")) {
+	        	Roles.removeUsersFromRoles(userId, "admin");
+	        }
+	        else {
+	        	Roles.addUsersToRoles(userId, "admin");
+	        }
+	    }
+	});
 }
 
 Meteor.methods({

@@ -94,9 +94,6 @@ Template.playlist.events({
 		let songId = this._id;
 		Meteor.call("deleteSong", songId);
 	},
-	"submit .songSearchForm": function(evt) {
-		evt.preventDefault();
-	},
 	"focusout .updateVideoUrl": function(evt) {
 		evt.preventDefault();
 		let songId = this._id,
@@ -108,5 +105,10 @@ Template.playlist.events({
 		let songId = this._id,
 			artworkUrl = $(evt.target).val();
 		Meteor.call("updateArtworkUrl", {songId, artworkUrl});
+	},
+	"click .toggleUserAdmin": function(evt) {
+		evt.preventDefault();
+		let userId = Meteor.userId();
+		Meteor.call("toggleUserAdmin", {userId});
 	}
 })

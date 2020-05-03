@@ -27,6 +27,14 @@ a {
     }
 }
 
+input {
+    @include border-box;
+    background-color: $primary-white;
+    padding: 5px;
+    outline: none;
+    border: none;
+}
+
 form {
     position: absolute;
     font-family: arial;
@@ -104,6 +112,9 @@ table {
             border: 1px solid grey;
             background-color: silver;
             padding: 5px;
+            input {
+                width: 100%;
+            }
         }
     }
 }
