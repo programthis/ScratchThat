@@ -24,7 +24,7 @@
 			</tr>
 			{{#each songs}}
 				<tr>
-					<td class="{{#if currentUser.profile.isAdmin}}skipToSong{{/if}} {{#if isPlaying}}isPlaying{{/if}}" title="{{#if isPlaying}}Now Playing{{/if}}">
+					<td class="{{#if isInRole 'admin'}}skipToSong{{/if}} {{#if isPlaying}}isPlaying{{/if}}" title="{{#if isPlaying}}Now Playing{{/if}}">
 						{{name}}
 					</td>
 					<td>
@@ -33,14 +33,14 @@
 					<td>
 						<input type="text" value={{artworkUrl}} class="updateArtworkUrl" />
 					</td>
-					{{#if currentUser.profile.isAdmin}}
+					{{#if isInRole "admin"}}
 						<td class="delete">
 							Delete
 						</td>
 					{{/if}}
 				</tr>
 			{{/each}}
-			{{#if currentUser.profile.isAdmin}}
+			{{#if isInRole "admin"}}
 				<tr>
 					<td class="syncSoundCloud">
 						Sync with SOUNDCLOUD

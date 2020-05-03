@@ -40,6 +40,15 @@ Meteor.users.attachSchema(new SimpleSchema({
 	profile: {
 	    type: Schemas.UserProfile
 	},
+	roles: {
+		type: Array,
+		label: "User Roles",
+		defaultValue: []
+	},
+	"roles.$": {
+        type: String,
+        label: "User Roles String Type"
+    },
 	services: {
 	    type: Object,
 	    optional: true,
@@ -51,6 +60,15 @@ Meteor.users.attachSchema(new SimpleSchema({
 if (Meteor.isServer) {
 	Meteor.publish("users", function() {
 		return Meteor.users.find({});
+	});
+
+	Meteor.publish(null, function () {
+		if (this.userId) {
+			return Meteor.roleAssignment.find({ 'user._id': this.userId });
+		}
+		else {
+			this.ready()
+		}
 	});
 
 	export const toggleUserAdmin = new ValidatedMethod({
@@ -67,6 +85,7 @@ if (Meteor.isServer) {
 	        	Roles.removeUsersFromRoles(userId, "admin");
 	        }
 	        else {
+	        	Roles.createRole("admin", {unlessExists: true});
 	        	Roles.addUsersToRoles(userId, "admin");
 	        }
 	    }
