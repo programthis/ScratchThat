@@ -80,12 +80,14 @@ form {
     z-index: -1;
     &.isPlaying {
         .bar {
+            transition: opacity 1.6s;
+            -webkit-transition: opacity 1.6s;
             opacity: 0.6;
         }
     }
     .bar {
-        transition: opacity 2s;
-        -webkit-transition: opacity 2s;
+        transition: opacity 1s;
+        -webkit-transition: opacity 1s;
         background-color: $secondary-silver;
         width:100px;
         height:700px;
