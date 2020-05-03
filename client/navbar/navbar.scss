@@ -20,6 +20,16 @@
 	.left, .right {
 		@include flex-align-no-justify;
 	}
+	.play {
+		@include flex-align;
+		.songArtwork {
+			width: 30px;
+			height: 30px;
+			border: 1px solid $primary-brown;
+			margin-left: -20px;
+			margin-right: 20px;
+		}
+	}
 	a, .soundControl {
 		@include animation-transition(0.2s);
 		color: #999;

@@ -10,7 +10,7 @@
 						<div class="logoElement logoVersion">3</div>
 					</a>
 				</span>
-				<span class="play">
+				<div class="play">
 					{{#if isPlaying}}
 						<span class="soundControl">
 							<span>NOW PLAYING</span>
@@ -22,7 +22,10 @@
 							<span>{{song.name}}</span>
 						</span>
 					{{/if}}
-				</span>
+					{{#if song.artworkUrl}}
+						<img class="songArtwork" src={{song.artworkUrl}}>
+					{{/if}}
+				</div>
 				<span class="next soundControl">
 					&#9656; &#9656;
 				</span>
