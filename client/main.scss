@@ -28,11 +28,13 @@ a {
 }
 
 input {
-    @include border-box;
-    background-color: $primary-white;
-    padding: 5px;
-    outline: none;
-    border: none;
+    &[type="text"] {
+        @include border-box;
+        background-color: $primary-white;
+        padding: 5px;
+        outline: none;
+        border: none;
+    }
 }
 
 form {

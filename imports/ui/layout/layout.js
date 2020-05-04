@@ -9,6 +9,7 @@ import "../navbar/navbar.js";
 var mySound;
 
 Template.layout.onCreated(function() {
+	Session.set({"volume": 100});
 	$(window).on('keyup', function(evt) {
 		let keyCode = evt.keyCode;
 		console.log(keyCode);
@@ -120,9 +121,18 @@ Template.layout.events({
 						nextTrack(nextSongId);
 					}
 				});
+				mySound.setVolume(Session.get("volume"));
 				mySound.play();
 			}
 		});
+	},
+	"input .volumeSlider": function(evt) {
+		evt.preventDefault();
+		let volume = $(evt.target).val();
+		Session.set({"volume": volume});
+		if (mySound) {
+			mySound.setVolume(volume);
+		}
 	}
 });
 
@@ -159,6 +169,7 @@ function nextTrack(songId) {
 				}
 			});
 			if (isPlaying){
+				mySound.setVolume(Session.get("volume"));
 				mySound.play();
 			}
 			else {
@@ -216,7 +227,8 @@ function playSong() {
 						nextTrack(nextSongId);
 					}
 				});
-				if (isPlaying){
+				if (isPlaying) {
+					mySound.setVolume(Session.get("volume"));
 					mySound.play();
 				}
 				else {
