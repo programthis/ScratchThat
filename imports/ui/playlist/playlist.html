@@ -40,18 +40,27 @@
 					{{/if}}
 				</tr>
 			{{/each}}
-			{{#if isInRole "admin"}}
+		</table>
+	</div>
+	{{#if isInRole "admin"}}
+		<div class="adminTableContainer">
+			<table>
 				<tr>
-					<td class="syncSoundCloud">
+					<th>
+						Admin Controls
+					</th>
+				</tr>
+				<tr>
+					<td class="syncSoundCloud admin">
 						Sync with SOUNDCLOUD
 					</td>
 				</tr>
 				<tr>
-					<td class="toggleUserAdmin">
+					<td class="toggleUserAdmin admin">
 						Toggle Admin
 					</td>
 				</tr>
-			{{/if}}
-		</table>
-	</div>
+			</table>
+		</div>
+	{{/if}}
 </template>
