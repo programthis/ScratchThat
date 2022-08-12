@@ -1,5 +1,5 @@
 ## Installation instructions
-meteor npm install
+`meteor npm install`
 
 ## Launch instructions
-meteor
+`meteor`
